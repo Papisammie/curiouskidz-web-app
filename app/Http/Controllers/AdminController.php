@@ -212,7 +212,7 @@ class AdminController extends Controller
 
     public function course()
     {
-        $course = Course::orderBy('id', 'DESC')->get();
+        $course = Course::orderBy('title')->latest()->get();
         $cat = Category::get();
         return view('admin.course.index',[
             'course' => $course,
@@ -282,9 +282,9 @@ class AdminController extends Controller
 
 
 
-    public function editCourse($course_id)
+    public function editCourse($id)
     {
-        $course = Course::where('course_id', $course_id)->first();
+        $course = Course::where('id', $id)->first();
         $cat = Category::get();
 
         return view('admin.course.edit',[
@@ -295,39 +295,20 @@ class AdminController extends Controller
 
 
 
-    public function editCoursePost(Request $request, $course_id)
+    public function editCoursePost(Request $request, $id)
     {
         try {
-            
-            $client = new Google_Client();
-            $client->setDeveloperKey('AIzaSyBw5x3UXM98YUi-iIDCRsAF8f-shuLUY_k');
-            $youtube = new Google_Service_YouTube($client);
-
-
-            // Edutainment 
-
-            $videoResponse = $youtube->videos->listVideos('snippet', array(
-                'id' => $request->videoId
-            ));
-                    
-
-            $video = $videoResponse[0];
-            $title = $video['snippet']['title'];
-            $description = $video['snippet']['description'];
-            $thumbnail = $video['snippet']['thumbnails']['default']['url'];
-
-            $cat = Course::where('course_id', $course_id)->update([
-                'title' => $title,
-                'type' => $request->type,
+        
+            $cat = Course::where('id', $id)->update([
+                'title' => $request->title,
                 'author' => $request->author,
-                'description' => $description,
-                'image' => $thumbnail,
-                'video_url' => $request->videoId,
                 'requirements' => $request->requirements,
                 'cat_id' => $request->cat_id,
                 'ageGroup' => $request->ageGroup,
                 'libraryGroup' => $request->libraryGroup,
                 'class' => $request->class,
+                'description' => $request->description,
+                
             ]);
 
         
@@ -635,7 +616,7 @@ class AdminController extends Controller
     
                 ])->with('success', "Getcha, Search Found");;
             }else{
-                return redirecct('admin/manage/course')->with('error','No Course Search found. Try to search again !');
+                return redirect('admin/manage/course')->with('error','No Course Search found. Try to search again !');
             }
         }
        

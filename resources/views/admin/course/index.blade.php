@@ -8,29 +8,32 @@ span {
   display: flex;
   justify-content: center;
 }
+
+.alert {
+  padding: 20px;
+  background-color: #00FF00;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
 </style>
 
 @section('content')
 
-        @if (session('success'))
-            <script type="text/javascript">
-            Swal.fire(
-              'Success',
-              '{{ session('success') }}',
-              'success'
-            )
-            </script>
-        @endif
-
-
-        @if (session('error'))
-            <script type="text/javascript">
-              'Error!',
-              '{{ session('error') }}',
-              'error'
-            )
-            </script>
-        @endif
+       
 
 
 <!-- Page Wrapper -->
@@ -74,19 +77,37 @@ span {
 
                     <div class="col-auto float-right ml-auto">
                             <a href="/admin/bulk/course/upload" class="btn add-btn btn-secondary"><i class="fa fa-plus"></i> Bulk Upload</a>
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Course </a>&nbsp; &nbsp;
+                            <!--<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Course </a>&nbsp; &nbsp;-->
                            
                         </div>
                       
                     
                         <div class="table-responsive">
+                            
+                             @if (session('success'))
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          {{ session('success') }}
+        </div>
+        @endif
+
+
+        @if (session('error'))
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          {{ session('error') }}
+        </div>
+        @endif
+        
+        
                             <table class="table table-striped custom-table datatable">
                                 <thead>
                                     <tr>
                                                 <th>Title</th>
                                                 <th>Description</th>
-                                                <th>Video</th>
+                                                
                                                 <th>Thumbnail</th>
+                                                <th>Category</th>
                                                 <th>Library</th>
                                                 <th>Status</th>
                                                 <th>Date Created</th>
@@ -106,12 +127,41 @@ span {
                                         <span> {!! substr($item->description, 0,  100) !!} </span>    
                                     </td>
 
-                                    <td>
-                                    <iframe width="120" height="80" src="https://www.youtube-nocookie.com/embed/{!! $item->video_url !!}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <!--<td>-->
+                                    <!--<iframe width="120" height="80" src="https://www.youtube.com/embed/{!! $item->video_url !!}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
 
-                                    </td>
+                                    <!--</td>-->
 
                                     <td><img src="{{$item->image }}" alt="{{$item->image }}" height="80" width="120"></td>
+                                    
+                                    
+                                    <td>
+                                        @if($item->class)
+                                            {{$item->class ?? "No class Added"}}
+                                                
+                                        @elseif($item->ageGroup)
+                                                
+                                            {{$item->ageGroup ?? "No Age Group Added"}}
+                                                
+                                        @elseif($item->ageGroup == "Select Video Age Group")
+                                                
+                                          Select Age Group
+                                          
+                                        @elseif($item->ageGroup == "Select Academic Class")
+                                        
+                                          Select Academic Class
+                                        
+                                        @else
+                                        
+                                          Select a category
+                                                
+                                        @endif
+                                    </td>
+                                   
+                                    
+                                    
+                                    
+                                    
 
                                     <td>@if($item->libraryGroup == "educational")
                                                 {{"Edutainment Video" ?? "No Library Added"}}
@@ -147,7 +197,7 @@ span {
 
 
                                         <td>
-                                            <div class="text-info">{{ date('j M, Y', strtotime($item->created_at)) }}</div>
+                                            <div class="text-info">{{ $item->created_at }}</div>
                                         
                                         </td>
 
@@ -161,10 +211,10 @@ span {
                                             <button type="button" class="btn btn-primary">Action</button>
                                             <button data-toggle="dropdown" type="button" class="btn btn-primary dropdown-toggle"></button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="/admin/edit/course/{{$item->course_id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                                <a class="dropdown-item" href="/admin/edit/course/{{$item->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
                                                 <a class="dropdown-item" href="/admin/course/{{$item->id}}/publish"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Publish</a>
                                                 <a class="dropdown-item" href="/admin/course/{{$item->id}}/unpublish"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> UnPublish</a>
-                                                <a class="dropdown-item" onclick="return confirm('Are you sure?')" href="/admin/category/{{$item->id}}/delete"><i class="fa fa-trash-o m-r-5"></i> Trash</a>
+                                                <a class="dropdown-item" onclick="return confirm('Are you sure?')" href="/admin/course/{{$item->id}}/delete"><i class="fa fa-trash-o m-r-5"></i> Trash</a>
                                             </div>
                                         </div>
                                         </div>

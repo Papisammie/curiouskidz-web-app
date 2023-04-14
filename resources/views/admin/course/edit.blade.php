@@ -8,22 +8,31 @@
 @section('content')
 
         @if (session('success'))
-            <script type="text/javascript">
-            Swal.fire(
-              'Success',
-              '{{ session('success') }}',
-              'success'
-            )
+              <script type="text/javascript">
+                $(".alert").show(() => {
+                    setTimeout(() => {
+                        $(".alert").fadeTo(500, 1).slideUp(500, () => {
+                
+                            $({{ session('success') }}).hide();
+                        })
+                    }, 5000)
+                });
+   
             </script>
         @endif
 
 
         @if (session('error'))
             <script type="text/javascript">
-              'Error!',
-              '{{ session('error') }}',
-              'error'
-            )
+                $(".alert").show(() => {
+                    setTimeout(() => {
+                        $(".alert").fadeTo(500, 1).slideUp(500, () => {
+                
+                            $({{ session('error') }}).hide();
+                        })
+                    }, 5000)
+                });
+   
             </script>
         @endif
 
@@ -53,29 +62,29 @@
 
                         
 
-                            <form action="/admin/edit/course/{{$course->course_id}}" enctype="multipart/form-data" id="intervention-image-upload" method="post">
+                            <form action="/admin/edit/course/{{$course->id}}" method="post">
                                 @csrf
 
                                 <div class="row">
 
 
-                                <div class="col-md-12">
-                                <label class="col-form-label">Couse Background Image </label>
-                                    <div class="profile-img-wrap edit-img">
+                                <!--<div class="col-md-12">-->
+                                <!--<label class="col-form-label">Couse Background Image </label>-->
+                                <!--    <div class="profile-img-wrap edit-img">-->
                                   
-                                            @if($course->image == '') 
-                                            <img class="inline-block" id="frame" src="{{ url('auth/cdn/img/profiles/avatar.png') }}" width="100px" height="100px"/>
-                                           @else
-                                           <img class="inline-block" id="frame" src="{!! $course->image !!}" width="100px" height="100px"/>
-                                           @endif
+                                <!--            @if($course->image == '') -->
+                                <!--            <img class="inline-block" id="frame" src="{{ url('auth/cdn/img/profiles/avatar.png') }}" width="100px" height="100px"/>-->
+                                <!--           @else-->
+                                <!--           <img class="inline-block" id="frame" src="{!! $course->image !!}" width="100px" height="100px"/>-->
+                                <!--           @endif-->
                                             
-                                        </div>
-                                    </div>
-                                        <script>
-                                                function preview() {
-                                                        frame.src=URL.createObjectURL(event.target.files[0]);
-                                                    }
-                                       </script>
+                                <!--        </div>-->
+                                <!--    </div>-->
+                                <!--        <script>-->
+                                <!--                function preview() {-->
+                                <!--                        frame.src=URL.createObjectURL(event.target.files[0]);-->
+                                <!--                    }-->
+                                <!--       </script>-->
 
 
                                 <div class="col-md-6">
@@ -107,113 +116,128 @@
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('cat_id') ? ' is-invalid' : '' }}">
                                             <label class="col-form-label">Categories </label>
-                                           
+                                          
+                                          
+                                          <?php $options=$course->cat_id ?>
                                             <select class="form-control" name="cat_id">
                                                     <option>Please select category</option>
-                                                    @if (count($cat)) > 0)
-                                                    @foreach ($cat as $d)
-                                                    <option value="{{$d->title}}" 
-                                                        @if ($d->title == old('title', $d->title))
-                                                            selected="selected"
-                                                        @endif
-                                                        >{{$d->title}}</option>
-                                                    @endforeach
-                                                    @endif
-                                                   
+                                                    
+                                        @foreach($cat as $d)
+                                         <option value="{{ $d->title }}" {{ ( $d->title == $options) ? 'selected' : '' }}>
+                                        {{ $d->title }}
+                                      </option>
+                                      @endforeach
+                                           
                                             </select>
                                         </div>
                                     </div>
 
 
-                                    <div class="col-md-6">
-                                        <div class="form-group{{ $errors->has('type') ? ' is-invalid' : '' }}">
-                                            <label class="col-form-label">Video Type </label>
-                                             <small>Select Video Type: <button type="button" class="btn btn-success btn-sm">{{$course->type ?? "No Type Selected"}}</button></small>
-                                            <select name="type" class="form-control">
-                                                <option selected>Select Video Type</option>
-                                                <option value="youtube">Youtube</option>
-                                                <option value="mp4">Mp4</option>
+                               
+                                    
+                                     <div class="col-md-6">
+                                        <div class="form-group{{ $errors->has('libraryGroup') ? ' is-invalid' : '' }}">
+                                            <label class="col-form-label">Library Group </label>
+ 
+ 
+                                         <?php $options = $course->libraryGroup ?>
+                                            <select id="selector" onchange="yesnoCheck(this);" name="libraryGroup" class="form-control">
+                                                
+                                        <option>Select Library Group</option>
+                                                
+                                        <option value="academic" {{ ( "academic" == $options) ? 'selected' : '' }}>
+                                        Academic Library
+                                      </option>
+                                      
+                                      <option value="educational" {{ ( "educational" == $options) ? 'selected' : '' }}>
+                                        Edutainment Library
+                                      </option>
+        
                                             </select>
-                                            @if ($errors->has('type'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('type') }}</strong>
-                                            </span>
-                                            @endif
+                                            
+                                            
+                                            
+                                            
                                         </div>
                                     </div>
 
 
+                                    <!--<div id="adc" style="display: none;" class="col-md-6">-->
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('ageGroup') ? ' is-invalid' : '' }}">
                                             <label class="col-form-label">Age Group </label>
-                                            <small>Select Age Group: <button type="button" class="btn btn-success btn-sm">{{$course->ageGroup ?? "No Age Group Selected"}}</button></small>
-                                            <select name="ageGroup" class="form-control">
-                                                <option selected>Select Video Age Group</option>
-                                                <option value="6-9">6-9</option>
-                                                <option value="10-14">10-14</option>
-                                                <option value="15-18">15-18</option>
-                                            </select>
-                                            @if ($errors->has('ageGroup'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('ageGroup') }}</strong>
-                                            </span>
-                                            @endif
+                                            
+                                        <?php $options = $course->ageGroup ?>
+                                        <select id="educational" name="ageGroup" class="form-control">
+                                                
+                                                
+                                            <option>Select Video Age Group</option>
+                                                    
+                                            <option value="6-9" {{ ( "6-9" == $options) ? 'selected' : '' }}>
+                                            6-9
+                                           </option>
+                                          
+                                          <option value="10-14" {{ ( "10-14" == $options) ? 'selected' : '' }}>
+                                            10-14
+                                          </option>
+                                          
+                                          <option value="15-18" {{ ( "15-18" == $options) ? 'selected' : '' }}>
+                                            15-18
+                                          </option>
+         
+                                        </select>
+                                           
                                         </div>
                                     </div>
 
+
+
+                                   
 
 
                                     <div class="col-md-6">
-                                        <div class="form-group{{ $errors->has('libraryGroup') ? ' is-invalid' : '' }}">
-                                            <label class="col-form-label">Library Group </label>
-                                             <small>Select Video Library Group: <button type="button" class="btn btn-success btn-sm">
-                                                 @if($course->libraryGroup == "educational")
-                                                 Edutainment Video
-                                                 
-                                                 @elseif($course->libraryGroup == "academic")
-                                                 Academic Video
-                                                 @else
-                                                 
-                                                 No Library Group Selected
-                                                 
-                                                 @endif</button></small>
-                                             
-                                             
-                                             
-                                             
-                                             
-                                            <select id="selector" onchange="yesnoCheck(this);" name="libraryGroup" class="form-control">
-                                                <option value="select">Select Video Library Group</option>
-                                                
-                                                <option value="academic">Academic Library</option>
-                                                <option value="educational">Edutainment Library</option>
-                                            </select>
-                                            @if ($errors->has('libraryGroup'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('libraryGroup') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-
-                                    <div id="adc" style="display: none;" class="col-md-6">
                                         <div class="form-group{{ $errors->has('video_url') ? ' is-invalid' : '' }}">
-                                            <label class="col-form-label">Select Academic Class </label>
-                                             <small>Select Academic Class: <button type="button" class="btn btn-success btn-sm">{{$course->educational ?? "No Class Selected"}}</button></small>
-                                            <select id="educational" name="class" class="form-control">
+                                            <label class="col-form-label">Only Select Academic Class if Academic Library is Selected</label>
+                                            
+                                         <?php $options = $course->class ?>
+                                            <select name="class" class="form-control">
                                                 <option selected>Select Academic Class</option>
-                                                <option value="pry1">Primary 1</option>
-                                                <option value="pry2">Primary 2</option>
-                                                <option value="pry3">Primary 3</option>
-                                                <option value="pry4">Primary 4</option>
-                                                <option value="pry5">Primary 5</option>
-                                                <option value="JSS1">JSS 1</option>
-                                                                        <option value="JSS2">JSS 2</option>
-                                                                        <option value="JSS3">JSS 3</option>
-                                                                        <option value="SS1">SS 1</option>
-                                                                        <option value="SS2">SS 2</option>
-                                                                        <option value="SS3">SS 3</option>
+                                                <option value="pry1" {{ ( "pry1" == $options) ? 'selected' : '' }}>
+                                            Primary 1
+                                          </option>
+                                          <option value="pry2" {{ ( "pry2" == $options) ? 'selected' : '' }}>
+                                            Primary 2
+                                          </option>
+                                          <option value="pry3" {{ ( "pry3" == $options) ? 'selected' : '' }}>
+                                            Primary 3
+                                          </option>
+                                          <option value="pry4" {{ ( "pry4" == $options) ? 'selected' : '' }}>
+                                            Primary 4
+                                          </option>
+                                          <option value="pry5" {{ ( "pry5" == $options) ? 'selected' : '' }}>
+                                            Primary 5
+                                          </option>
+                                          <option value="JSS1" {{ ( "JSS1" == $options) ? 'selected' : '' }}>
+                                            JSS 1
+                                          </option>
+                                          <option value="JSS2" {{ ( "JSS2" == $options) ? 'selected' : '' }}>
+                                            JSS 2
+                                          </option>
+                                          <option value="JSS3" {{ ( "JSS3" == $options) ? 'selected' : '' }}>
+                                            JSS 3
+                                          </option>
+                                          <option value="SS1" {{ ( "SS1" == $options) ? 'selected' : '' }}>
+                                            SS 1
+                                          </option>
+                                          <option value="SS2" {{ ( "SS2" == $options) ? 'selected' : '' }}>
+                                            SS 2
+                                          </option>
+                                          <option value="SS1" {{ ( "SS1" == $options) ? 'selected' : '' }}>
+                                            SS 3
+                                          </option>
+                                                
+                                                
+                                         
                                             </select>
                                         </div>
                                     </div>
@@ -237,13 +261,9 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('video_url') ? ' is-invalid' : '' }}">
-                                            <label class="col-form-label">Video URL </label>
-                                            <input type="text" class="form-control" value="{{$course->video_url}}" placeholder="Enter your Embedded Mp4 Url OR Youtube Video ID e.g vNUaSDbRaJg" name="video_url">
-                                            @if ($errors->has('video_url'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('video_url') }}</strong>
-                                            </span>
-                                            @endif
+                                            <label class="col-form-label">Video ID </label>
+                                            <input type="text" class="form-control" readonly value="{{$course->video_url}}">
+                                           
                                         </div>
                                     </div>
 
