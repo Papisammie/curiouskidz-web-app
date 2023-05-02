@@ -111,11 +111,11 @@
 					<!-- Flag -->
 					<li class="nav-item dropdown has-arrow flag-nav">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-							<img src="{{url('auth/cdn/img/flags/us.png') }}" alt="" height="20"> <span>English</span>
+							<img src="https://cdn-icons-png.flaticon.com/512/4628/4628635.png" alt="" height="20"> <span>English</span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="{{url('auth/cdn/img/flags/us.png') }}" alt="" height="16"> English
+								<img src="https://cdn-icons-png.flaticon.com/512/4628/4628635.png" alt="" height="16"> English
 							</a>
 						
 						</div>
@@ -124,13 +124,10 @@
 				
 					<li class="nav-item dropdown has-arrow main-drop">
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                            @if(Auth::user()->avatar == '')
-                                            <span class="user-img"><img src="{{ url('auth/cdn/img/profiles/avatar.png') }}" alt="">
-                                          
-                                            @else
-                                            <span class="user-img"><img src="{{ url('auth/cdn/img/profiles') }}/{{Auth::user()->avatar}}" alt="">
                                        
-                                            @endif
+                                            <span class="user-img"><img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="">
+                                       
+                                           
 						
 							<span class="status online"></span></span>
 							<span>{{Auth::user()->name}}</span>

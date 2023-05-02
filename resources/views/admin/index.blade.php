@@ -196,16 +196,36 @@ $(function(){
 													<td>
 														<h2 class="table-avatar">
 														@if($item->roles == "student")
+														
+														@if($item->avatar == "")
+														
+														<span> <img height="50" width="50" src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"></span> 
+														
+														@else
 														<span> <img height="50" width="50" src="/uploads/profilePicture/{!! $item->avatar
-															!!}"></span>  
+															!!}"></span> 
+														@endif
+														
+														
+														
+														
 														@elseif($item->roles == "parent")
-
+														
+														
+														@if($item->parentImage == "")
+														
+														<span> <img height="50" width="50" src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"></span> 
+														
+														@else
 														<span> <img height="50" width="50" src="/uploads/profilePicture/{!! $item->parentImage
-															!!}"></span>  
+															!!}"></span> 
+														@endif
+														
 
+												
 														@else
 
-														<span> <img height="50" width="50" src="/auth/cdn/img/profiles/avatar.png"></span>  
+														<span> <img height="50" width="50" src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"></span>  
 
 														
 														@endif

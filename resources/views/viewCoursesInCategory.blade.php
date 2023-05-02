@@ -36,9 +36,9 @@
 
 
                                     {{-- Pagination --}}
-                                    <div class="d-flex justify-content-center">
-                                        {!! $getCourse->links() !!}
-                                    </div>
+                                    <!--<div class="d-flex justify-content-center">-->
+                                    <!--    {!! $getCourse->links() !!}-->
+                                    <!--</div>-->
                                     
                                     </div>  
                                 </div>

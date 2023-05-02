@@ -95,11 +95,31 @@
                                                 <li class="mr-2"><a href="https://www.facebook.com/sharer/sharer.php?u=YourPageLink.com&display=popup" class="btn-round-md bg-twiiter"><i class="font-xs ti-twitter-alt text-white"></i></a></li>
                                                 <li class="mr-2"><a href="https://www.facebook.com/sharer/sharer.php?u=YourPageLink.com&display=popup" class="btn-round-md bg-linkedin"><i class="font-xs ti-linkedin text-white"></i></a></li>
                                                 <li class="mr-2"><a href="https://www.facebook.com/sharer/sharer.php?u=YourPageLink.com&display=popup" class="btn-round-md bg-instagram"><i class="font-xs ti-instagram text-white"></i></a></li>
-                                                <!-- <li class="mr-2"><a href="default-course-details.html#" class="btn-round-md bg-pinterest"><i class="font-xs ti-pinterest text-white"></i></a></li> -->
+                                                
+                                       <li class="mr-2"><div onclick="myFunction()"><img src="https://cdn-icons-png.flaticon.com/512/9352/9352267.png" height="40" width="40"></div></li>
+                                        <input type="hidden" value="https://curiouskidz.com.ng/course/details/{{$getcourse->course_id}}" id="myInput">
+                                                
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                                
+                               
+                                <script>
+                                  function myFunction() {
+                                       /* Get the text field */
+                                       var copyText = document.getElementById("myInput");
+                                    
+                                       /* Select the text field */
+                                       copyText.select();
+                                    
+                                       /* Copy the text inside the text field */
+                                       document.execCommand("Copy");
+                                    
+                                       /* Alert the copied text */
+                                       alert("Copied the text: " + copyText.value);
+                                     }
+                                </script>
 
                             
                                 <span class="dot ml-2 mr-2 d-inline-block btn-round-xss bg-grey"></span>
@@ -117,10 +137,7 @@
 
                             </div>
 
-                            <!-- <div class="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4">
-                                <h2 class="fw-700 font-sm mb-3 mt-1 pl-1 mb-3">Description</h2>
-                                <p class="font-xssss fw-500 lh-28 text-grey-600 mb-0 pl-2">After creating more than a dozen courses on Microsoft Access databases and programming in VBA, many students have contacted me with discussions on specific problems and scenarios.  From these discussions, I have created videos reviewing the details of the most useful techniques that everyone will eventually need.  I have made sure that every detail of these techniques is recorded in the videos!  BUT you should be somewhat familiar with VBA since there are lots of coding examples in the course. <br>                                        There are MANY tips and tricks in this workshop that you will not find an ANY of my other courses! <br>  I also include a specific database design challenge from a student and then go over the details of how I would handle it. <br> If you are willing to take the time to go through this course you could easily be much more productive with Microsoft Access in just a few hours! </p>
-                            </div> -->
+                            
 
                             <div class="card d-block border-0 rounded-lg overflow-hidden p-4 shadow-xss mt-4 mb-5">
                                 <h2 class="fw-700 font-sm mb-3 mt-1 pl-1 mb-3">Requirements</h2>
@@ -216,7 +233,7 @@
                                 <div class="item">
                                     <div class="card course-card w300 p-0 shadow-xss border-0 rounded-lg overflow-hidden mr-1 mb-4">
                                         <div class="card-image w-100 mb-3">
-                                            <a href="/course/details/{{$item->course_id}}" class="video-bttn position-relative d-block"><img src="/uploads/course/{{$item->image}}" alt="Course image" class="w-100"></a>
+                                            <a href="/course/details/{{$item->course_id}}" class="video-bttn position-relative d-block"><img src="{{$item->image}}" alt="Course image" class="w-100"></a>
                                         </div>
                                         <div class="card-body pt-0">
                                             <span class="font-xsssss fw-700 pl-3 pr-3 lh-32 text-uppercase rounded-lg ls-2 alert-warning d-inline-block text-warning mr-1">{{$item->cat_id}}</span>

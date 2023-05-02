@@ -150,10 +150,10 @@ span {
                                             <button type="button" class="btn btn-primary">Action</button>
                                             <button data-toggle="dropdown" type="button" class="btn btn-primary dropdown-toggle"></button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="/admin/edit/course/{{$item->course_id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                                <a class="dropdown-item" href="/admin/edit/course/{{$item->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
                                                 <a class="dropdown-item" href="/admin/course/{{$item->id}}/publish"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Publish</a>
                                                 <a class="dropdown-item" href="/admin/course/{{$item->id}}/unpublish"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> UnPublish</a>
-                                                <a class="dropdown-item" onclick="return confirm('Are you sure?')" href="/admin/category/{{$item->id}}/delete"><i class="fa fa-trash-o m-r-5"></i> Trash</a>
+                                                <a class="dropdown-item" onclick="return confirm('Are you sure?')" href="/admin/course/{{$item->id}}/delete"><i class="fa fa-trash-o m-r-5"></i> Trash</a>
                                             </div>
                                         </div>
                                         </div>

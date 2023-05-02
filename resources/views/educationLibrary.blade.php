@@ -104,11 +104,15 @@
                                 </div>
                             </div>
                         </div>
+                       
                         <div class="col-lg-12 pt-2">
                             <h2 class="fw-400 font-lg">Explore <b>Categories</b></h2>
                         </div>
-
+                         <br> <br>
                         <div class="col-lg-12 mt-3">
+                            <!--<div class="owl-carousel category-card owl-theme overflow-visible dot-none right-nav pb-4 nav-xs-none">-->
+                                
+                                
                             <div class="owl-carousel category-card owl-theme overflow-hidden overflow-visible-xl nav-none">
 
                                @if(Auth::user()->roles == "guest")
@@ -168,15 +172,13 @@
                             </div>
                         </div>
 
-                       
-                        
 
                         <div class="col-lg-12 pt-4 mb-3">
                             <h2 class="fw-400 font-lg d-block">Most <b> Watched Courses</b></h2>
                         </div>
 
                         <div class="col-lg-12 pt-2">
-                        <div class="feedback-slider owl-carousel category-card owl-theme overflow-hidden dot-none right-nav pb-4 nav-xs-none">
+                        <div class="feedback-slider owl-carousel category-card owl-theme overflow-visible dot-none right-nav pb-4 nav-xs-none">
                             @if(Auth::user()->roles == "guest")
 
                                     @foreach($mostwatchForGuest as $item)

@@ -105,8 +105,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/manage/course', [App\Http\Controllers\AdminController::class, 'course'])->name('course');
     Route::post('/manage/course', [App\Http\Controllers\AdminController::class, 'coursePost'])->name('coursePost');
     Route::get('/course/{id}/delete', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('deleteCourse');
-    Route::get('/edit/course/{course_id}', [App\Http\Controllers\AdminController::class, 'editCourse'])->name('editCourse');
-    Route::post('/edit/course/{course_id}', [App\Http\Controllers\AdminController::class, 'editCoursePost'])->name('editCoursePost');
+    Route::get('/edit/course/{id}', [App\Http\Controllers\AdminController::class, 'editCourse'])->name('editCourse');
+    Route::post('/edit/course/{id}', [App\Http\Controllers\AdminController::class, 'editCoursePost'])->name('editCoursePost');
     Route::get('/course/{id}/publish', [App\Http\Controllers\AdminController::class, 'publishCourse'])->name('publishCourse');
     Route::get('/course/{id}/unpublish', [App\Http\Controllers\AdminController::class, 'unpublishCourse'])->name('unpublishCourse');
 
